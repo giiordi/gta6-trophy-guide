@@ -1,25 +1,85 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>GTA VI trophy checklist</title>
-<link rel="stylesheet" href="style.css">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#111716">
+  <title>Leonida Field Notes — GTA VI trophy guide</title>
+  <link rel="stylesheet" href="./styles.css">
+  <script defer src="./data/catalog.js"></script>
+  <script defer src="./state.js"></script>
+  <script defer src="./views.js"></script>
+  <script defer src="./roadmap.js"></script>
+  <script defer src="./app.js"></script>
 </head>
 <body>
-<header>
-  <h1>GTA VI trophy checklist</h1>
-  <p id="progress">0 of 55 earned</p>
-</header>
-<div class="controls">
-  <label>Grade <select id="grade"><option value="all">All</option><option value="platinum">Platinum</option><option value="gold">Gold</option><option value="silver">Silver</option><option value="bronze">Bronze</option></select></label>
-  <button id="export" type="button">Export progress</button>
-  <label class="import">Import progress <input id="import" type="file" accept="application/json"></label>
-</div>
-<table>
-  <thead><tr><th>Earned</th><th>Trophy</th><th>Grade</th><th>How to get it</th></tr></thead>
-  <tbody id="rows"></tbody>
-</table>
-<script type="module" src="app.js"></script>
+  <div class="app-shell">
+    <header class="masthead">
+      <div class="brand-lockup">
+        <div class="brand-mark" aria-hidden="true">L</div>
+        <div><div class="brand-name">LEONIDA <span>FIELD NOTES</span></div><div class="brand-subtitle">A practical trophy ledger for Grand Theft Auto VI</div></div>
+      </div>
+      <div class="masthead-meta"><span class="offline-dot"></span> LOCAL GUIDE <span class="meta-separator">·</span> PLAYSTATION 5</div>
+    </header>
+
+    <section class="intro-row" aria-labelledby="page-title">
+      <div class="intro-copy">
+        <div class="eyebrow">THE LONG WAY ROUND</div>
+        <h1 id="page-title">Leonida, accounted for.</h1>
+        <p>One calm route through 55 trophies: protect the early missable, finish the story, then sweep the map and its side work.</p>
+      </div>
+      <div class="intro-stats" aria-label="Trophy totals and estimate">
+        <div><strong>55</strong><span>trophies</span></div><i></i><div><strong>28</strong><span>hidden</span></div><i></i><div><strong>01</strong><span>missable*</span></div><i></i><div><strong>~200</strong><span>hours*</span></div>
+      </div>
+    </section>
+
+    <section class="progress-panel" aria-label="Your progress">
+      <div class="progress-summary"><div><span class="eyebrow">YOUR RUN</span><strong id="progress-count">0 <small>/ 55</small></strong></div><div class="progress-percent" id="progress-percent">0%</div></div>
+      <div class="progress-track" role="progressbar" aria-label="Trophies earned" aria-valuemin="0" aria-valuemax="55" aria-valuenow="0"><div id="progress-fill"></div></div>
+      <div class="grade-breakdown" id="grade-breakdown"></div>
+    </section>
+
+    <section class="control-panel" aria-label="Checklist controls">
+      <div class="control-top">
+        <div class="view-switch" role="tablist" aria-label="Guide view">
+          <button class="view-tab active" id="checklist-tab" role="tab" aria-selected="true" data-view="checklist">Checklist</button>
+          <button class="view-tab" id="roadmap-tab" role="tab" aria-selected="false" data-view="roadmap">Roadmap <span class="tab-count">6</span></button>
+        </div>
+        <div class="file-actions">
+          <button class="quiet-button" id="export-button" type="button"><span aria-hidden="true">↥</span> Export</button>
+          <button class="quiet-button" id="import-button" type="button"><span aria-hidden="true">↧</span> Import</button>
+          <input id="import-file" type="file" accept="application/json,.json" hidden>
+        </div>
+      </div>
+      <div class="filter-line">
+        <div class="filter-chips" role="group" aria-label="Filter trophies by kind">
+          <button class="filter-chip selected" data-filter="all" aria-pressed="true">All <span>55</span></button>
+          <button class="filter-chip" data-filter="story" aria-pressed="false">Story</button>
+          <button class="filter-chip" data-filter="missable" aria-pressed="false">Missable <span class="alert-count">1</span></button>
+          <button class="filter-chip" data-filter="collectibles" aria-pressed="false">Collectibles</button>
+          <button class="filter-chip" data-filter="activities" aria-pressed="false">Activities</button>
+          <button class="filter-chip" data-filter="online" aria-pressed="false">Online <span>0</span></button>
+        </div>
+        <label class="search-box"><span aria-hidden="true">⌕</span><input id="search-input" type="search" placeholder="Find a trophy" aria-label="Search trophies"></label>
+      </div>
+      <div class="preference-line">
+        <label class="toggle-label"><input id="spoiler-toggle" type="checkbox"><span class="toggle-track"></span><span>Hide story spoilers</span></label>
+        <span id="save-status" class="save-status" aria-live="polite">Progress saves in this browser</span>
+      </div>
+    </section>
+
+    <main>
+      <section id="checklist-view" class="guide-grid" aria-label="Trophy checklist">
+        <section class="list-panel">
+          <div class="panel-heading"><div><span class="eyebrow">THE LEDGER</span><h2>Checklist</h2></div><span id="visible-count" class="result-count">55 entries</span></div>
+          <div id="trophy-list" class="trophy-list"></div>
+        </section>
+        <section id="detail-panel" class="detail-panel" aria-live="polite"></section>
+      </section>
+      <section id="roadmap-view" class="roadmap-view" hidden aria-label="Roadmap to the platinum"></section>
+    </main>
+
+    <footer class="page-footer"><span>* One potentially missable, flagged from the supplied route note.</span><span>Offline by design · Your progress stays on this device</span></footer>
+  </div>
 </body>
 </html>
